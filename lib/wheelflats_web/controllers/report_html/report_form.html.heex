@@ -1,3 +1,8 @@
+<%!-- 3 (or 4) options
+- each should have a description of what it feels like
+options should change a svg to show what the wheel looks like at that stage
+report the train line, train number, location (optional), and extra comments (optional) --%>
+
 <.form :let={f} for={@changeset} action={@action}>
   <.input
     field={f[:line]}
