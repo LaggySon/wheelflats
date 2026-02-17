@@ -3,7 +3,7 @@ import Config
 # Configure your database
 config :wheelflats, Wheelflats.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "password",
   hostname: "localhost",
   database: "wheelflats_dev",
   stacktrace: true,
