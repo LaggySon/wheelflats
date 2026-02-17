@@ -6,6 +6,8 @@ defmodule Wheelflats.Reports.Report do
     field :line, Ecto.Enum, values: [:orange, :blue, :red, :green]
     field :train, :integer
     field :severity, :integer
+    field :location, :string
+    field :comments, :string
 
     timestamps(type: :utc_datetime)
   end
@@ -13,7 +15,7 @@ defmodule Wheelflats.Reports.Report do
   @doc false
   def changeset(report, attrs) do
     report
-    |> cast(attrs, [:line, :train, :severity])
+    |> cast(attrs, [:line, :train, :severity, :location, :comments])
     |> validate_required([:line, :train, :severity])
   end
 end
