@@ -1,0 +1,8 @@
+<Layouts.app flash={@flash}>
+  <.header>
+    New Report
+    <:subtitle>Use this form to manage report records in your database.</:subtitle>
+  </.header>
+
+  <.report_form changeset={@changeset} action={~p"/reports"} return_to={~p"/reports"} />
+</Layouts.app>

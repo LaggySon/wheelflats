@@ -17,6 +17,8 @@ defmodule WheelflatsWeb.Router do
   scope "/", WheelflatsWeb do
     pipe_through :browser
 
+    resources "/reports", ReportController
+
     get "/", PageController, :home
   end
 

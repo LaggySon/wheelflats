@@ -1,0 +1,15 @@
+<.form :let={f} for={@changeset} action={@action}>
+  <.input
+    field={f[:line]}
+    type="select"
+    label="Line"
+    prompt="Choose a value"
+    options={Ecto.Enum.values(Wheelflats.Reports.Report, :line)}
+  />
+  <.input field={f[:train]} type="number" label="Train" />
+  <.input field={f[:severity]} type="number" label="Severity" />
+  <footer>
+    <.button variant="primary">Save Report</.button>
+    <.button :if={@return_to} href={@return_to}>Cancel</.button>
+  </footer>
+</.form>
