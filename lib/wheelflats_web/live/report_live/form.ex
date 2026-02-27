@@ -15,18 +15,18 @@ defmodule WheelflatsWeb.ReportLive.Form do
 
       <.form for={@form} id="report-form" phx-change="validate" phx-submit="save">
         <.input
-          field={@form[:line]}
-          type="select"
-          label="Line"
-          prompt="Choose a value"
-          options={Ecto.Enum.values(Wheelflats.Reports.Report, :line)}
-        />
-        <.input
           field={@form[:severity]}
           type="select"
           label="Severity"
           prompt="Choose a value"
           options={Ecto.Enum.values(Wheelflats.Reports.Report, :severity)}
+        />
+        <.input
+          field={@form[:line]}
+          type="select"
+          label="Line"
+          prompt="Choose a value"
+          options={Ecto.Enum.values(Wheelflats.Reports.Report, :line)}
         />
         <.input field={@form[:train]} type="number" label="Train" />
         <.input field={@form[:location]} type="text" label="Location" />

@@ -54,12 +54,13 @@ defmodule WheelflatsWeb.Router do
       on_mount: [{WheelflatsWeb.UserAuth, :require_authenticated}] do
       live "/users/settings", UserLive.Settings, :edit
       live "/users/settings/confirm-email/:token", UserLive.Settings, :confirm_email
+      live "/reports", ReportLive.Index, :index
+      live "/reports/new", ReportLive.Form, :new
+      live "/reports/:id", ReportLive.Show, :show
+      live "/reports/:id/edit", ReportLive.Form, :edit
     end
 
-    live "/reports", ReportLive.Index, :index
-    live "/reports/new", ReportLive.Form, :new
-    live "/reports/:id", ReportLive.Show, :show
-    live "/reports/:id/edit", ReportLive.Form, :edit
+
 
     post "/users/update-password", UserSessionController, :update_password
   end
