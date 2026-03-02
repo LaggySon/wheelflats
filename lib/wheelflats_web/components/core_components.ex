@@ -175,6 +175,7 @@ defmodule WheelflatsWeb.CoreComponents do
   attr :options, :list, doc: "the options to pass to Phoenix.HTML.Form.options_for_select/2"
   attr :multiple, :boolean, default: false, doc: "the multiple flag for select inputs"
   attr :class, :any, default: nil, doc: "the input class to use over defaults"
+  attr :label_class, :string, default: nil, doc: "the input class to use on input labels"
   attr :error_class, :any, default: nil, doc: "the input error class to use over defaults"
 
   attr :rest, :global,
@@ -242,7 +243,7 @@ defmodule WheelflatsWeb.CoreComponents do
 
     ~H"""
     <div class="fieldset mb-2">
-      <label>
+      <label class={@label_class}>
         <span class="label">
           <input
             type="radio"

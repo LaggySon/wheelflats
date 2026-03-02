@@ -6,7 +6,6 @@ defmodule WheelflatsWeb.ReportLive.Form do
 
   # options={Ecto.Enum.values(Wheelflats.Reports.Report, :severity)}
 
-
   @impl true
   def render(assigns) do
     ~H"""
@@ -17,7 +16,6 @@ defmodule WheelflatsWeb.ReportLive.Form do
       </.header>
 
       <.form for={@form} id="report-form" phx-change="validate" phx-submit="save">
-
         <%!-- Severity Options --%>
         <%!-- <.input
           field={@form[:severity]}
@@ -29,10 +27,33 @@ defmodule WheelflatsWeb.ReportLive.Form do
         <.input
           field={@form[:severity]}
           type="radio"
-          label={option}
-          value={option}
-          :for={option <- Ecto.Enum.values(Wheelflats.Reports.Report, :severity)}
+          label="No Flats"
+          class="radio radio-sm bg-green-100 border-green-300 checked:bg-green-200 checked:text-green-600 checked:border-green-600"
+          value={1}
         />
+        <.input
+          field={@form[:severity]}
+          type="radio"
+          label="Small amount of bumpiness/thumping noise"
+          class="radio radio-sm bg-yellow-100 border-yellow-300 checked:bg-yellow-200 checked:text-yellow-600 checked:border-yellow-600"
+          value={2}
+        />
+        <.input
+          field={@form[:severity]}
+          type="radio"
+          label="Noticeable bumpiness/thumping noise, audible over conversation"
+          class="radio radio-sm bg-orange-100 border-orange-300 checked:bg-orange-200 checked:text-orange-600 checked:border-orange-600"
+          value={3}
+        />
+        <.input
+          field={@form[:severity]}
+          type="radio"
+          label="Significant bumpiness/thumping noise, feels unsafe, hard/impossible to hear conversation"
+          label_class="border-default border-1 hover:cursor-pointer rounded p-3 has-[:checked]:bg-red-200 has-[:checked]:text-red-600 has-[:checked]:border-red-600 bg-red-100 border-red-300"
+          class="hidden peer radio radio-sm"
+          value={4}
+        />
+
         <%!-- End Severity Options --%>
         <.input
           field={@form[:line]}
@@ -84,7 +105,9 @@ defmodule WheelflatsWeb.ReportLive.Form do
 
   @impl true
   def handle_event("validate", %{"report" => report_params}, socket) do
-    changeset = Reports.change_report(socket.assigns.current_scope, socket.assigns.report, report_params)
+    changeset =
+      Reports.change_report(socket.assigns.current_scope, socket.assigns.report, report_params)
+
     {:noreply, assign(socket, form: to_form(changeset, action: :validate))}
   end
 
