@@ -1,0 +1,19 @@
+{
+  "html": {
+    "snippets": {
+      ".input": "<.input ${1}/>",
+      ".form": "<.form ${1}>\n\t${2}\n</.form>",
+      ".link": "<.link navigate={${1}}>${2}</.link>",
+      ".button": "<.button ${1}>${2}</.button>",
+      ".header": "<.header>\n\t${1}\n</.header>",
+      ".modal": "<.modal ${1}>\n\t${2}\n</.modal>",
+      ".table": "<.table id={${1}} rows={${2}}>\n\t<:col :let={${3}} label=\"${4}\">${5}</:col>\n</.table>",
+      ".flash_group": "<.flash_group flash={@flash} />",
+      ".error": "<.error>${1}</.error>",
+      ".label": "<.label>${1}</.label>",
+      ".simple_form": "<.simple_form for={${1}} phx-submit=\"${2}\">\n\t${3}\n</.simple_form>",
+      ".back": "<.back navigate={${1}}>Back</.back>",
+      ".icon": "<.icon name=\"hero-${1}\" class=\"${2}\"/>"
+    }
+  }
+}

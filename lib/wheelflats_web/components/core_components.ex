@@ -164,7 +164,7 @@ defmodule WheelflatsWeb.CoreComponents do
   attr :type, :string,
     default: "text",
     values: ~w(checkbox color date datetime-local email file month number password
-               search select tel text textarea time url week hidden)
+               search select tel text textarea time url week hidden radio)
 
   attr :field, Phoenix.HTML.FormField,
     doc: "a form field struct retrieved from the form, for example: @form[:email]"
@@ -189,6 +189,9 @@ defmodule WheelflatsWeb.CoreComponents do
     |> assign(:errors, Enum.map(errors, &translate_error(&1)))
     |> assign_new(:name, fn -> if assigns.multiple, do: field.name <> "[]", else: field.name end)
     |> assign_new(:value, fn -> field.value end)
+    |> assign_new(:checked, fn ->
+    to_string(assigns[:value]) == to_string(field.value)
+    end)
     |> input()
   end
 
@@ -222,6 +225,32 @@ defmodule WheelflatsWeb.CoreComponents do
             value="true"
             checked={@checked}
             class={@class || "checkbox checkbox-sm"}
+            {@rest}
+          />{@label}
+        </span>
+      </label>
+      <.error :for={msg <- @errors}>{msg}</.error>
+    </div>
+    """
+  end
+
+  def input(%{type: "radio"} = assigns) do
+    assigns =
+      assign_new(assigns, :checked, fn ->
+        Phoenix.HTML.Form.normalize_value("radio", assigns[:value])
+      end)
+
+    ~H"""
+    <div class="fieldset mb-2">
+      <label>
+        <span class="label">
+          <input
+            type="radio"
+            id={@id}
+            name={@name}
+            checked={@checked}
+            value={@value}
+            class={@class || "radio radio-sm"}
             {@rest}
           />{@label}
         </span>

@@ -4,6 +4,9 @@ defmodule WheelflatsWeb.ReportLive.Form do
   alias Wheelflats.Reports
   alias Wheelflats.Reports.Report
 
+  # options={Ecto.Enum.values(Wheelflats.Reports.Report, :severity)}
+
+
   @impl true
   def render(assigns) do
     ~H"""
@@ -14,13 +17,23 @@ defmodule WheelflatsWeb.ReportLive.Form do
       </.header>
 
       <.form for={@form} id="report-form" phx-change="validate" phx-submit="save">
+
+        <%!-- Severity Options --%>
+        <%!-- <.input
+          field={@form[:severity]}
+          type="radio"
+          label={option}
+          prompt="Choose a value"
+          :for={option <- Ecto.Enum.values(Wheelflats.Reports.Report, :severity)}
+        /> --%>
         <.input
           field={@form[:severity]}
-          type="select"
-          label="Severity"
-          prompt="Choose a value"
-          options={Ecto.Enum.values(Wheelflats.Reports.Report, :severity)}
+          type="radio"
+          label={option}
+          value={option}
+          :for={option <- Ecto.Enum.values(Wheelflats.Reports.Report, :severity)}
         />
+        <%!-- End Severity Options --%>
         <.input
           field={@form[:line]}
           type="select"
