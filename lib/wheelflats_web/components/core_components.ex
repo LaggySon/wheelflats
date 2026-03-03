@@ -164,7 +164,7 @@ defmodule WheelflatsWeb.CoreComponents do
   attr :type, :string,
     default: "text",
     values: ~w(checkbox color date datetime-local email file month number password
-               search select tel text textarea time url week hidden)
+               search select tel text textarea time url week hidden radio)
 
   attr :field, Phoenix.HTML.FormField,
     doc: "a form field struct retrieved from the form, for example: @form[:email]"
@@ -175,6 +175,7 @@ defmodule WheelflatsWeb.CoreComponents do
   attr :options, :list, doc: "the options to pass to Phoenix.HTML.Form.options_for_select/2"
   attr :multiple, :boolean, default: false, doc: "the multiple flag for select inputs"
   attr :class, :any, default: nil, doc: "the input class to use over defaults"
+  attr :label_class, :string, default: nil, doc: "the input class to use on input labels"
   attr :error_class, :any, default: nil, doc: "the input error class to use over defaults"
 
   attr :rest, :global,
@@ -189,6 +190,9 @@ defmodule WheelflatsWeb.CoreComponents do
     |> assign(:errors, Enum.map(errors, &translate_error(&1)))
     |> assign_new(:name, fn -> if assigns.multiple, do: field.name <> "[]", else: field.name end)
     |> assign_new(:value, fn -> field.value end)
+    |> assign_new(:checked, fn ->
+    to_string(assigns[:value]) == to_string(field.value)
+    end)
     |> input()
   end
 
@@ -214,7 +218,7 @@ defmodule WheelflatsWeb.CoreComponents do
           disabled={@rest[:disabled]}
           form={@rest[:form]}
         />
-        <span class="label">
+        <span class="label text-wrap">
           <input
             type="checkbox"
             id={@id}
@@ -231,11 +235,37 @@ defmodule WheelflatsWeb.CoreComponents do
     """
   end
 
+  def input(%{type: "radio"} = assigns) do
+    assigns =
+      assign_new(assigns, :checked, fn ->
+        Phoenix.HTML.Form.normalize_value("radio", assigns[:value])
+      end)
+
+    ~H"""
+    <div class="fieldset mb-2">
+      <label class={@label_class}>
+        <span class="label text-wrap">
+          <input
+            type="radio"
+            id={@id}
+            name={@name}
+            checked={@checked}
+            value={@value}
+            class={@class || "radio radio-sm"}
+            {@rest}
+          />{@label}
+        </span>
+      </label>
+      <.error :for={msg <- @errors}>{msg}</.error>
+    </div>
+    """
+  end
+
   def input(%{type: "select"} = assigns) do
     ~H"""
     <div class="fieldset mb-2">
       <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
+        <span :if={@label} class="label mb-1 text-wrap">{@label}</span>
         <select
           id={@id}
           name={@name}
@@ -256,7 +286,7 @@ defmodule WheelflatsWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
+        <span :if={@label} class="label mb-1 text-wrap">{@label}</span>
         <textarea
           id={@id}
           name={@name}
@@ -277,7 +307,7 @@ defmodule WheelflatsWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
+        <span :if={@label} class="label mb-1 text-wrap">{@label}</span>
         <input
           type={@type}
           name={@name}
