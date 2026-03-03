@@ -218,7 +218,7 @@ defmodule WheelflatsWeb.CoreComponents do
           disabled={@rest[:disabled]}
           form={@rest[:form]}
         />
-        <span class="label">
+        <span class="label text-wrap">
           <input
             type="checkbox"
             id={@id}
@@ -244,7 +244,7 @@ defmodule WheelflatsWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label class={@label_class}>
-        <span class="label">
+        <span class="label text-wrap">
           <input
             type="radio"
             id={@id}
@@ -265,7 +265,7 @@ defmodule WheelflatsWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
+        <span :if={@label} class="label mb-1 text-wrap">{@label}</span>
         <select
           id={@id}
           name={@name}
@@ -286,7 +286,7 @@ defmodule WheelflatsWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
+        <span :if={@label} class="label mb-1 text-wrap">{@label}</span>
         <textarea
           id={@id}
           name={@name}
@@ -307,7 +307,7 @@ defmodule WheelflatsWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
+        <span :if={@label} class="label mb-1 text-wrap">{@label}</span>
         <input
           type={@type}
           name={@name}

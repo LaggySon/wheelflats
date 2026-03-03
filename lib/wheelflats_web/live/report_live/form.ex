@@ -6,55 +6,73 @@ defmodule WheelflatsWeb.ReportLive.Form do
 
   # options={Ecto.Enum.values(Wheelflats.Reports.Report, :severity)}
 
+  defp severity_classes("green") do
+    "has-[:checked]:bg-green-200 has-[:checked]:border-green-600 bg-green-100 border-green-300"
+  end
+
+  defp severity_classes("orange") do
+    "has-[:checked]:bg-orange-200 has-[:checked]:border-orange-600 bg-orange-100 border-orange-300"
+  end
+
+  defp severity_classes("yellow") do
+    "has-[:checked]:bg-yellow-200 has-[:checked]:border-yellow-600 bg-yellow-100 border-yellow-300"
+  end
+
+  defp severity_classes("red") do
+    "has-[:checked]:bg-red-200 has-[:checked]:border-red-600 bg-red-100 border-red-300"
+  end
+
+  def severity_selector(assigns) do
+    ~H"""
+    <.input
+      field={@field}
+      type="radio"
+      label={@label}
+      label_class={"border-default border-1 hover:cursor-pointer rounded p-3 text-black font-bold text-wrap " <> severity_classes(@color)}
+      class="hidden peer radio radio-sm"
+      value={@value}
+    />
+    """
+  end
+
   @impl true
   def render(assigns) do
     ~H"""
     <Layouts.app flash={@flash} current_scope={@current_scope}>
       <.header>
         {@page_title}
-        <:subtitle>Use this form to manage report records in your database.</:subtitle>
+        <:subtitle>Report a new wheel flat</:subtitle>
       </.header>
 
-      <.form for={@form} id="report-form" phx-change="validate" phx-submit="save">
+      <.form for={@form} id="report-form" phx-change="validate" phx-submit="save" class="flex flex-col m-3 max-w-full">
+
         <%!-- Severity Options --%>
-        <%!-- <.input
+        <.severity_selector
           field={@form[:severity]}
-          type="radio"
-          label={option}
-          prompt="Choose a value"
-          :for={option <- Ecto.Enum.values(Wheelflats.Reports.Report, :severity)}
-        /> --%>
-        <.input
-          field={@form[:severity]}
-          type="radio"
-          label="No Flats"
-          class="radio radio-sm bg-green-100 border-green-300 checked:bg-green-200 checked:text-green-600 checked:border-green-600"
+          label="No Flats - Smooth, quiet ride"
+          color="green"
           value={1}
         />
-        <.input
+        <.severity_selector
           field={@form[:severity]}
-          type="radio"
-          label="Small amount of bumpiness/thumping noise"
-          class="radio radio-sm bg-yellow-100 border-yellow-300 checked:bg-yellow-200 checked:text-yellow-600 checked:border-yellow-600"
+          label="Minor - Small amount of bumpiness/thumping noise"
+          color="yellow"
           value={2}
         />
-        <.input
+        <.severity_selector
           field={@form[:severity]}
-          type="radio"
-          label="Noticeable bumpiness/thumping noise, audible over conversation"
-          class="radio radio-sm bg-orange-100 border-orange-300 checked:bg-orange-200 checked:text-orange-600 checked:border-orange-600"
+          label="Moderate - Noticeable bumpiness/thumping noise, audible over conversation"
+          color="orange"
           value={3}
         />
-        <.input
+        <.severity_selector
           field={@form[:severity]}
-          type="radio"
-          label="Significant bumpiness/thumping noise, feels unsafe, hard/impossible to hear conversation"
-          label_class="border-default border-1 hover:cursor-pointer rounded p-3 has-[:checked]:bg-red-200 has-[:checked]:text-red-600 has-[:checked]:border-red-600 bg-red-100 border-red-300"
-          class="hidden peer radio radio-sm"
+          label="Severe - Significant bumpiness/thumping noise, feels unsafe"
+          color="red"
           value={4}
         />
-
         <%!-- End Severity Options --%>
+
         <.input
           field={@form[:line]}
           type="select"
@@ -62,9 +80,9 @@ defmodule WheelflatsWeb.ReportLive.Form do
           prompt="Choose a value"
           options={Ecto.Enum.values(Wheelflats.Reports.Report, :line)}
         />
-        <.input field={@form[:train]} type="number" label="Train" />
-        <.input field={@form[:location]} type="text" label="Location" />
-        <.input field={@form[:comments]} type="text" label="Comments" />
+        <.input field={@form[:train]} type="number" label="Car Number - Find this at the front/rear interior or exterior of the train carriage" />
+        <.input field={@form[:location]} required={false} type="text" label="Location (Optional) - Where in the train car do you hear the noise coming from?" />
+        <.input field={@form[:comments]} required={false} type="text" label="Comments (Optional) - Any additional information you want to add" />
         <footer>
           <.button phx-disable-with="Saving..." variant="primary">Save Report</.button>
           <.button navigate={return_path(@current_scope, @return_to, @report)}>Cancel</.button>

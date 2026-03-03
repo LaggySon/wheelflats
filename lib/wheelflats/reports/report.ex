@@ -17,7 +17,7 @@ defmodule Wheelflats.Reports.Report do
   def changeset(report, attrs, user_scope) do
     report
     |> cast(attrs, [:line, :severity, :train, :location, :comments])
-    |> validate_required([:line, :severity, :train, :location, :comments])
+    |> validate_required([:line, :severity, :train])
     |> put_change(:user_id, user_scope.user.id)
   end
 end
