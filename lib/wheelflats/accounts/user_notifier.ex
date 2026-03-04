@@ -9,7 +9,7 @@ defmodule Wheelflats.Accounts.UserNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"Wheelflats", "contact@example.com"})
+      |> from({"Wheelflats", "noreply@laggi.sh"})
       |> subject(subject)
       |> text_body(body)
 
