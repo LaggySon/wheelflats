@@ -32,6 +32,16 @@ defmodule Wheelflats.Reports do
   end
 
   @doc """
+  Returns all reports by all users.
+
+  ## Example
+    iex> list_all_reports()
+  """
+  def list_all_reports do
+    Repo.all(Report)
+  end
+
+  @doc """
   Returns the list of reports.
 
   ## Examples

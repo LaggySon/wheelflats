@@ -32,12 +32,15 @@
   </head>
   <body>
     <ul class="menu menu-horizontal w-full relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
+      <li class="mr-auto font-bold">
+        <.link href={~p"/"}>WheelFlats</.link>
+      </li>
       <%= if @current_scope do %>
         <li>
-          {@current_scope.user.email}
+          <.link href={~p"/reports"}>My Reports</.link>
         </li>
         <li>
-          <.link href={~p"/users/settings"}>Settings</.link>
+          <.link href={~p"/reports/new"}>+ New Report</.link>
         </li>
         <li>
           <.link href={~p"/users/log-out"} method="delete">Log out</.link>

@@ -7,19 +7,19 @@ defmodule WheelflatsWeb.ReportLive.Form do
   # options={Ecto.Enum.values(Wheelflats.Reports.Report, :severity)}
 
   defp severity_classes("green") do
-    "has-[:checked]:bg-green-200 has-[:checked]:border-green-600 bg-green-100 border-green-300"
-  end
-
-  defp severity_classes("orange") do
-    "has-[:checked]:bg-orange-200 has-[:checked]:border-orange-600 bg-orange-100 border-orange-300"
+    "bg-green-500/20 border border-green-500/60 text-base-content has-[:checked]:bg-green-600 has-[:checked]:border-green-400 has-[:checked]:text-white"
   end
 
   defp severity_classes("yellow") do
-    "has-[:checked]:bg-yellow-200 has-[:checked]:border-yellow-600 bg-yellow-100 border-yellow-300"
+    "bg-yellow-400/20 border border-yellow-400/60 text-base-content has-[:checked]:bg-yellow-400 has-[:checked]:border-yellow-300 has-[:checked]:text-black"
+  end
+
+  defp severity_classes("orange") do
+    "bg-orange-500/20 border border-orange-500/60 text-base-content has-[:checked]:bg-orange-500 has-[:checked]:border-orange-400 has-[:checked]:text-white"
   end
 
   defp severity_classes("red") do
-    "has-[:checked]:bg-red-200 has-[:checked]:border-red-600 bg-red-100 border-red-300"
+    "bg-red-600/20 border border-red-600/60 text-base-content has-[:checked]:bg-red-600 has-[:checked]:border-red-500 has-[:checked]:text-white"
   end
 
   def severity_selector(assigns) do
@@ -28,7 +28,7 @@ defmodule WheelflatsWeb.ReportLive.Form do
       field={@field}
       type="radio"
       label={@label}
-      label_class={"border-default border-1 hover:cursor-pointer rounded p-3 text-black font-bold text-wrap " <> severity_classes(@color)}
+      label_class={"hover:cursor-pointer p-3 font-bold text-wrap " <> severity_classes(@color)}
       class="hidden peer radio radio-sm"
       value={@value}
     />

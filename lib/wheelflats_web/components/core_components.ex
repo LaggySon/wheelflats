@@ -94,7 +94,7 @@ defmodule WheelflatsWeb.CoreComponents do
   slot :inner_block, required: true
 
   def button(%{rest: rest} = assigns) do
-    variants = %{"primary" => "btn-primary", nil => "btn-primary btn-soft"}
+    variants = %{"primary" => "btn-primary font-black tracking-widest uppercase", nil => "btn-ghost border border-base-300 font-black tracking-widest uppercase"}
 
     assigns =
       assign_new(assigns, :class, fn ->
@@ -218,7 +218,7 @@ defmodule WheelflatsWeb.CoreComponents do
           disabled={@rest[:disabled]}
           form={@rest[:form]}
         />
-        <span class="label text-wrap">
+        <span class="label text-wrap text-xs font-black tracking-widest uppercase text-base-content/70">
           <input
             type="checkbox"
             id={@id}
@@ -244,7 +244,7 @@ defmodule WheelflatsWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label class={@label_class}>
-        <span class="label text-wrap">
+        <span class="label text-wrap text-xs font-black tracking-widest uppercase text-base-content/70">
           <input
             type="radio"
             id={@id}
@@ -265,7 +265,7 @@ defmodule WheelflatsWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label>
-        <span :if={@label} class="label mb-1 text-wrap">{@label}</span>
+        <span :if={@label} class="label mb-1 text-wrap text-xs font-black tracking-widest uppercase text-base-content/70">{@label}</span>
         <select
           id={@id}
           name={@name}
@@ -286,7 +286,7 @@ defmodule WheelflatsWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label>
-        <span :if={@label} class="label mb-1 text-wrap">{@label}</span>
+        <span :if={@label} class="label mb-1 text-wrap text-xs font-black tracking-widest uppercase text-base-content/70">{@label}</span>
         <textarea
           id={@id}
           name={@name}
@@ -307,7 +307,7 @@ defmodule WheelflatsWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label>
-        <span :if={@label} class="label mb-1 text-wrap">{@label}</span>
+        <span :if={@label} class="label mb-1 text-wrap text-xs font-black tracking-widest uppercase text-base-content/70">{@label}</span>
         <input
           type={@type}
           name={@name}
@@ -344,12 +344,12 @@ defmodule WheelflatsWeb.CoreComponents do
 
   def header(assigns) do
     ~H"""
-    <header class={[@actions != [] && "flex items-center justify-between gap-6", "pb-4"]}>
+    <header class={[@actions != [] && "flex items-center justify-between gap-6", "pb-4 border-b border-base-300 mb-6"]}>
       <div>
-        <h1 class="text-lg font-semibold leading-8">
+        <h1 class="text-2xl font-black tracking-widest uppercase">
           {render_slot(@inner_block)}
         </h1>
-        <p :if={@subtitle != []} class="text-sm text-base-content/70">
+        <p :if={@subtitle != []} class="mt-1 text-xs font-bold tracking-widest uppercase text-base-content/50">
           {render_slot(@subtitle)}
         </p>
       </div>
@@ -390,25 +390,31 @@ defmodule WheelflatsWeb.CoreComponents do
       end
 
     ~H"""
-    <table class="table table-zebra">
+    <table class="w-full">
       <thead>
-        <tr>
-          <th :for={col <- @col}>{col[:label]}</th>
-          <th :if={@action != []}>
+        <tr class="border-b border-base-300">
+          <th :for={col <- @col} class="text-left py-3 px-4 text-xs font-black tracking-widest uppercase text-base-content/50">
+            {col[:label]}
+          </th>
+          <th :if={@action != []} class="py-3 px-4">
             <span class="sr-only">{gettext("Actions")}</span>
           </th>
         </tr>
       </thead>
-      <tbody id={@id} phx-update={is_struct(@rows, Phoenix.LiveView.LiveStream) && "stream"}>
-        <tr :for={row <- @rows} id={@row_id && @row_id.(row)}>
+      <tbody id={@id} phx-update={is_struct(@rows, Phoenix.LiveView.LiveStream) && "stream"} class="divide-y divide-base-300">
+        <tr
+          :for={row <- @rows}
+          id={@row_id && @row_id.(row)}
+          class={@row_click && "hover:bg-base-200 cursor-pointer"}
+        >
           <td
             :for={col <- @col}
             phx-click={@row_click && @row_click.(row)}
-            class={@row_click && "hover:cursor-pointer"}
+            class="py-4 px-4 font-bold"
           >
             {render_slot(col, @row_item.(row))}
           </td>
-          <td :if={@action != []} class="w-0 font-semibold">
+          <td :if={@action != []} class="py-4 px-4 w-0 font-semibold">
             <div class="flex gap-4">
               <%= for action <- @action do %>
                 {render_slot(action, @row_item.(row))}
