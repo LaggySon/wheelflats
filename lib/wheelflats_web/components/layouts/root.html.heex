@@ -7,9 +7,10 @@
     <.live_title default="Wheelflats" suffix=" · Phoenix Framework">
       {assigns[:page_title]}
     </.live_title>
-    <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
+     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
     </script>
+    
     <script>
       (() => {
         const setTheme = (theme) => {
@@ -30,30 +31,58 @@
       })();
     </script>
   </head>
+  
   <body>
-    <ul class="menu menu-horizontal w-full relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
-      <li class="mr-auto font-bold">
-        <.link href={~p"/"}>WheelFlats</.link>
-      </li>
-      <%= if @current_scope do %>
-        <li>
-          <.link href={~p"/reports"}>My Reports</.link>
-        </li>
-        <li>
-          <.link href={~p"/reports/new"}>+ New Report</.link>
-        </li>
-        <li>
-          <.link href={~p"/users/log-out"} method="delete">Log out</.link>
-        </li>
-      <% else %>
-        <li>
-          <.link href={~p"/users/register"}>Register</.link>
-        </li>
-        <li>
-          <.link href={~p"/users/log-in"}>Log in</.link>
-        </li>
-      <% end %>
-    </ul>
-    {@inner_content}
+    <div class="drawer drawer-end">
+      <%!-- Checkbox drives the drawer open/close state (pure CSS, no JS needed) --%>
+      <input id="mobile-drawer" type="checkbox" class="drawer-toggle" />
+      <div class="drawer-content">
+        <%!-- Desktop nav: hidden on mobile --%>
+        <nav class="max-sm:hidden">
+          <ul class="menu menu-horizontal w-full relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8">
+            <li class="mr-auto font-bold text-xl"><.link href={~p"/"}>WheelFlats</.link></li>
+            
+            <%= if @current_scope do %>
+              <li><.link href={~p"/reports"}>My Reports</.link></li>
+              
+              <li><.link href={~p"/reports/new"}>+ New Report</.link></li>
+              
+              <li><.link href={~p"/users/log-out"} method="delete">Log out</.link></li>
+            <% else %>
+              <li><.link href={~p"/users/register"}>Register</.link></li>
+              
+              <li><.link href={~p"/users/log-in"}>Log in</.link></li>
+            <% end %>
+          </ul>
+        </nav>
+         <%!-- Mobile hamburger: hidden on desktop, so drawer can never open on desktop --%>
+        <div class="sm:hidden flex items-center justify-between m-5">
+          <.link href={~p"/"} class="btn btn-ghost font-bold text-xl">WheelFlats</.link>
+          <label for="mobile-drawer" class="btn btn-ghost w-fit">
+            <.icon name="hero-bars-3" class="size-8" />
+          </label>
+        </div>
+      </div>
+       <%!-- Mobile sidebar drawer --%>
+      <div class="drawer-side">
+        <label for="mobile-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+        <ul class="menu bg-base-200 min-h-full w-64 p-4">
+          <li class="font-bold text-xl"><.link href={~p"/"}>WheelFlats</.link></li>
+          
+          <%= if @current_scope do %>
+            <li><.link href={~p"/reports"}>My Reports</.link></li>
+            
+            <li><.link href={~p"/reports/new"}>+ New Report</.link></li>
+            
+            <li><.link href={~p"/users/log-out"} method="delete">Log out</.link></li>
+          <% else %>
+            <li><.link href={~p"/users/register"}>Register</.link></li>
+            
+            <li><.link href={~p"/users/log-in"}>Log in</.link></li>
+          <% end %>
+        </ul>
+      </div>
+       {@inner_content}
+    </div>
   </body>
 </html>

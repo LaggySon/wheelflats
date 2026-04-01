@@ -16,10 +16,35 @@ defmodule WheelflatsWeb.ReportLive.Index do
         </:actions>
       </.header>
 
+      <%!-- Mobile card list --%>
+      <div id="reports-mobile" class="sm:hidden divide-y divide-base-300" phx-update="stream">
+        <div :for={{id, report} <- @streams.reports} id={"mobile-#{id}"}
+          class="py-4 flex flex-col gap-1 cursor-pointer hover:bg-base-200 px-2 rounded"
+          phx-click={JS.navigate(~p"/reports/#{report}")}
+        >
+          <div class="flex items-center justify-between">
+            <span class="font-black uppercase tracking-wider text-sm">{report.line}</span>
+            <span class="badge badge-sm">{report.severity}</span>
+          </div>
+          <div class="text-sm text-base-content/70">{report.train} · {report.location}</div>
+          <div :if={report.comments} class="text-xs text-base-content/50 truncate">{report.comments}</div>
+          <div class="flex gap-4 mt-1 text-xs font-semibold" phx-click={nil}>
+            <.link navigate={~p"/reports/#{report}/edit"} class="link">Edit</.link>
+            <.link
+              phx-click={JS.push("delete", value: %{id: report.id}) |> hide("#mobile-#{id}")}
+              data-confirm="Are you sure?"
+              class="link link-error"
+            >Delete</.link>
+          </div>
+        </div>
+      </div>
+
+      <%!-- Desktop table --%>
       <.table
         id="reports"
         rows={@streams.reports}
         row_click={fn {_id, report} -> JS.navigate(~p"/reports/#{report}") end}
+        class="max-sm:hidden"
       >
         <:col :let={{_id, report}} label="Line">{report.line}</:col>
         <:col :let={{_id, report}} label="Severity">{report.severity}</:col>

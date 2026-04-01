@@ -1,6 +1,6 @@
 <Layouts.flash_group flash={@flash} />
-<main class="flex items-center justify-center w-full h-full bg-base-100 min-h-screen">
-  <div class="w-full max-w-lg">
+<main class="flex items-center justify-center w-full bg-base-100 h-full">
+  <div class="w-full max-w-lg h-fit my-auto">
     <div class="px-4 py-8 border-b border-base-300">
       <h1 class="text-base-content text-3xl font-black tracking-widest uppercase">
         Wheel Flat Reports
@@ -28,8 +28,11 @@
             <span
               class="w-5 h-5 rounded-full flex-shrink-0"
               style={"background-color: " <> Map.get(%{red: "#DA291C", orange: "#ED8B00", green: "#00843D", blue: "#003DA5"}, line, "#71717a")}
-            ></span>
-            <span class="text-base-content text-xl font-bold tracking-wide uppercase">{line} Line</span>
+            >
+            </span>
+            <span class="text-base-content text-xl font-bold tracking-wide uppercase">
+              {line} Line
+            </span>
           </div>
           <span class="text-base-content text-2xl font-black tabular-nums">{count}</span>
         </div>

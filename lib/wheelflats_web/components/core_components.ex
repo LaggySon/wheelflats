@@ -372,6 +372,7 @@ defmodule WheelflatsWeb.CoreComponents do
   attr :rows, :list, required: true
   attr :row_id, :any, default: nil, doc: "the function for generating the row id"
   attr :row_click, :any, default: nil, doc: "the function for handling phx-click on each row"
+  attr :class, :string, default: nil
 
   attr :row_item, :any,
     default: &Function.identity/1,
@@ -390,7 +391,7 @@ defmodule WheelflatsWeb.CoreComponents do
       end
 
     ~H"""
-    <table class="w-full">
+    <table class={["w-full", @class]}>
       <thead>
         <tr class="border-b border-base-300">
           <th :for={col <- @col} class="text-left py-3 px-4 text-xs font-black tracking-widest uppercase text-base-content/50">
